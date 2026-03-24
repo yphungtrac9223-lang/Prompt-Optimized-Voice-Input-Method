@@ -7,3 +7,6 @@ dist/
 *.lnk
 archive/
 *.csv
+docs/
+AGENTS.md
+CLAUDE.md
