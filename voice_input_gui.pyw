@@ -1,5 +1,5 @@
 """
-语音输入法 - PySide6 Fluent 版本
+VoPrompt - PySide6 Fluent 版本
 基于阿里云 Qwen3-ASR / Groq Whisper API 的轻量级语音输入工具
 架构：PySide6 + Fluent Widgets 原生窗口，系统托盘常驻
 """
@@ -476,7 +476,7 @@ class SettingsWindow(QWidget):
         self.config = config
         self._on_save = on_save
         self._vocab_scanned.connect(self._on_vocab_scanned)
-        self.setWindowTitle("语音输入法")
+        self.setWindowTitle("VoPrompt")
         self.setFixedWidth(460)
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
         self._build_ui()
@@ -488,7 +488,7 @@ class SettingsWindow(QWidget):
         root.setSpacing(12)
 
         # 标题
-        title = SubtitleLabel("语音输入法")
+        title = SubtitleLabel("VoPrompt")
         title.setAlignment(Qt.AlignCenter)
         root.addWidget(title)
 
@@ -888,7 +888,7 @@ class VoiceInputApp:
 
     def _setup_tray(self):
         self.tray = QSystemTrayIcon(self._create_tray_icon(), self.qt_app)
-        self.tray.setToolTip("语音输入法")
+        self.tray.setToolTip("VoPrompt")
 
         menu = QMenu()
         show_action = QAction("打开设置", menu)
