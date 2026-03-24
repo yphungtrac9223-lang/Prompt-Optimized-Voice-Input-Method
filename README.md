@@ -1,55 +1,153 @@
-# 语音输入法
+# Prompt-Optimized Voice Input Method
 
-面向 AI 编程的语音输入工具 — 说人话，出 prompt。
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://python.org)
+[![Windows 10/11](https://img.shields.io/badge/Platform-Windows%2010%2F11-0078D6.svg)]()
 
-基于云端 ASR 的轻量级 Windows 语音输入工具。按住热键说话，松开即出文字，自动粘贴到当前光标位置。专为程序员与 AI 编程场景设计。
+**Free and open-source voice input tool optimized for AI coding — speak naturally, get structured prompts.**
 
-## 功能
+> A lightweight alternative to [Wispr Flow](https://wispr.com/) ($144/yr) and [SuperWhisper](https://superwhisper.com/) (macOS only), built for Windows developers who use Claude Code, Cursor, and other AI coding tools.
 
-### 基础能力
-- **按住说话，松开出字** — 默认热键 Caps Lock，可自定义
-- **连续录音模式** — 短按开始/暂停/恢复，双击结束，适合口述复杂 prompt
-- **双 ASR 引擎** — 阿里云 Qwen3-ASR（推荐）/ Groq Whisper，无需本地 GPU
-- **自动粘贴** — 识别结果自动粘贴到当前焦点窗口
-- **多语言** — 中文、英文、日语、韩语、粤语
-- **系统托盘常驻** — 关闭窗口最小化到托盘
+<!-- TODO: 录一个在 Claude Code 中使用的 GIF 放这里 -->
+<!-- ![Demo](docs/demo.gif) -->
 
-### AI 编程增强
-- **AI Prompt 模式** — 口语化开发指令自动整理为结构化 AI prompt
-- **通用润色** — 自动修正识别错误、优化标点、去除口语冗余词
-- **项目词汇自动提取** — 扫描项目目录，自动提取库名/类名/函数名到词汇表，提升术语识别率
-- **识别结果预览** — 粘贴前可预览、编辑、确认，避免误发
-- **应用感知智能模式** — 根据当前窗口自动切换润色模式（终端→Prompt 模式，浏览器→通用润色）
+---
 
-## ASR 引擎对比
+## Why This Tool?
 
-| 引擎 | 中文准确率 | 价格 | 特点 |
-|---|---|---|---|
-| **阿里云 Qwen3-ASR-Flash** | ~97% | ¥0.013/分钟 | 中文最强，支持 ITN |
-| **Groq Whisper Large v3** | ~90% | 免费（有速率限制） | 速度极快，英文好，支持自定义词汇表 |
+Every day, developers type thousands of words to AI assistants. Voice input should be faster — but existing tools don't understand code.
 
-## 快速开始
+|  | **This Project** | Wispr Flow | SuperWhisper | Handy |
+|--|-----------------|------------|--------------|-------|
+| Price | **Free** | $144/yr | $60/yr | Free |
+| Platform | **Windows** | Mac (Win beta) | Mac only | Cross-platform |
+| AI Prompt Mode | **Yes** | No | No | No |
+| Chinese ASR | **Optimized** | Basic | Basic | Basic |
+| Project Vocab Scan | **Yes** | No | No | No |
+| App-aware Mode | **Yes** | Yes | No | No |
+| Open Source | **Yes** | No | No | Yes |
+
+---
+
+## Features
+
+### Core
+- **Hold-to-talk** — Hold Caps Lock (customizable), speak, release to auto-paste
+- **Continuous recording** — Tap to start/pause/resume, double-tap to finish — ideal for long prompts
+- **Dual ASR engines** — Alibaba Qwen3-ASR (best for Chinese) / Groq Whisper (free tier)
+- **Multi-language** — Chinese, English, Japanese, Korean, Cantonese
+
+### AI Coding Enhancement
+- **AI Prompt Mode** — Automatically restructures spoken instructions into clean, structured AI prompts
+  - Input: *"嗯那个帮我把用户列表改成分页的每页二十条再加个搜索功能还有排序"*
+  - Output: *"请修改用户列表：1) 分页（每页20条）2) 搜索功能 3) 排序功能"*
+- **Project Vocabulary Scan** — Imports library names, class names, and function names from your codebase to improve recognition accuracy
+- **Preview & Edit** — Review and edit transcription before pasting — no more wrong text sent to AI
+- **App-aware Smart Mode** — Automatically switches polish mode based on foreground window:
+  - Terminal (Claude Code, cmd) → AI Prompt mode
+  - IDE (VS Code, Cursor) → AI Prompt mode
+  - Browser (Chrome, Edge) → General polish
+  - Other apps → Raw transcription
+
+---
+
+## Quick Start
+
+### 1. Install
 
 ```bash
-# 安装依赖
 pip install PySide6 PySide6-Fluent-Widgets sounddevice keyboard pyperclip numpy requests groq
+```
 
-# 启动
+### 2. Get an API Key (choose one)
+
+| Engine | Link | Cost |
+|--------|------|------|
+| **Alibaba Qwen3-ASR** (recommended for Chinese) | [bailian.console.aliyun.com](https://bailian.console.aliyun.com/) | ¥0.013/min |
+| **Groq Whisper** (free) | [console.groq.com](https://console.groq.com/) | Free (rate limited) |
+
+### 3. Run
+
+```bash
 pythonw voice_input_gui.pyw
 ```
 
-1. 在设置界面选择 ASR 引擎并填入对应 API Key
-2. 按住热键（默认 Caps Lock）说话，松开后自动识别并粘贴
+Paste your API key in the settings window, hold **Caps Lock**, speak, and release.
 
-### API Key 获取
+---
 
-- **阿里云**：[百炼平台](https://bailian.console.aliyun.com/) 注册后获取
-- **Groq**：[GroqCloud](https://console.groq.com/) 注册后获取免费 Key
+## Configuration
 
-## 技术栈
+First run auto-generates `config.json`. See [`config.example.json`](config.example.json) for all options:
 
-- **UI**：PySide6 + QFluentWidgets（Fluent Design）
-- **录音**：sounddevice
-- **热键**：keyboard
-- **剪贴板**：pyperclip
-- **AI 润色**：Groq LLaMA / 阿里云 Qwen
+```jsonc
+{
+  "asr_provider": "aliyun",       // "aliyun" or "groq"
+  "hotkey": "caps lock",          // any key or combo like "ctrl+alt+v"
+  "recording_mode": "hold",       // "hold" (hold-to-talk) or "toggle" (tap to start/stop)
+  "polish_mode": "prompt",        // "off", "polish" (fix errors), "prompt" (restructure)
+  "smart_mode": true,             // auto-switch polish mode by foreground app
+  "confirm_before_paste": false   // preview before pasting
+}
+```
+
+---
+
+## How It Works
+
+```
+Hold hotkey → Record audio → ASR (cloud) → [AI Polish/Prompt] → Paste to cursor
+                                                    ↑
+                                          Smart Mode detects
+                                          foreground app type
+```
+
+The AI Prompt mode passes your transcription through an LLM (Groq LLaMA 3.3 or Alibaba Qwen) with a system prompt that restructures spoken instructions into clean, numbered prompts — without adding anything you didn't say.
+
+---
+
+## FAQ
+
+**Q: Is my audio stored anywhere?**
+A: No. Audio is processed in memory only, sent to the ASR API for recognition, then discarded. No logs, no recordings. The code is open source — audit it yourself.
+
+**Q: Does it work on macOS / Linux?**
+A: Currently Windows only. The hotkey system and window detection use Windows APIs. PRs for cross-platform support are welcome.
+
+**Q: Can I use it offline?**
+A: Not yet. Cloud ASR gives much better accuracy and requires no GPU. Local model support (via faster-whisper) is planned for a future release.
+
+**Q: What if the AI Prompt mode changes my intent?**
+A: The system prompt explicitly instructs the LLM to preserve your original intent and not add requirements you didn't mention. You can also enable "Preview before paste" to review and edit before sending.
+
+**Q: Caps Lock keeps toggling when I use it as hotkey?**
+A: The app automatically suppresses Caps Lock toggle — your keyboard state won't change.
+
+---
+
+## Tech Stack
+
+| Component | Library |
+|-----------|---------|
+| UI | PySide6 + [QFluentWidgets](https://github.com/zhiyiYo/PyQt-Fluent-Widgets) |
+| Audio | sounddevice |
+| Hotkey | keyboard |
+| Clipboard | pyperclip |
+| ASR | Alibaba Qwen3-ASR / Groq Whisper |
+| AI Polish | Groq LLaMA 3.3 / Alibaba Qwen-Plus |
+
+---
+
+## Contributing
+
+Contributions welcome! Especially:
+- Bug reports and feature requests via [Issues](https://github.com/yphungtrac9223-lang/Prompt-Optimized-Voice-Input-Method/issues)
+- Cross-platform support (macOS, Linux)
+- Local model integration (faster-whisper)
+- UI/UX improvements
+
+---
+
+## License
+
+[MIT](LICENSE) — free for personal and commercial use.
