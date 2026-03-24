@@ -1,0 +1,21 @@
+{
+  "asr_provider": "aliyun",
+  "api_key": "",
+  "aliyun_key": "",
+  "custom_vocab": "Claude Code, Python, Groq, Whisper, NiceGUI, API",
+  "hotkey": "caps lock",
+  "language": "zh",
+  "sample_rate": 16000,
+  "auto_paste": true,
+  "confirm_before_paste": false,
+  "mic_gain": 15,
+  "polish_mode": "off",
+  "recording_mode": "hold",
+  "smart_mode": false,
+  "smart_mode_rules": {
+    "terminal": "prompt",
+    "ide": "prompt",
+    "browser": "polish",
+    "default": "off"
+  }
+}
